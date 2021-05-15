@@ -1,5 +1,7 @@
 <div class="container">
-  <ifc-header></ifc-header>
-  <router-outlet></router-outlet>
+  <ifc-header [title]="title"></ifc-header>
+  <div class="paddingAllMedium">
+    <router-outlet></router-outlet>
+  </div>
   <ifc-footer></ifc-footer>
 </div>

@@ -13,12 +13,13 @@ export class LandingComponent implements OnInit {
 
   public districts: IDistricts[];
   public districtWiseInfo: IDistrictWiseInfo;
+  public floatLabelControl = new FormControl('auto');
   public states: IStates[];
   public selectedDistrict: IDistricts;
   public selectedState: IStates;
   public stateControl = new FormControl('', Validators.required);
   public districtControl = new FormControl('', Validators.required);
-
+  public pincode: number;
 
   constructor(private dataService: DataService) { }
 
@@ -39,6 +40,12 @@ export class LandingComponent implements OnInit {
     this.selectedDistrict = district;
     this.dataService.findByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response) => {
       this.districtWiseInfo = response;
+    });
+  }
+
+  findByPin(): void {
+    this.dataService.findByPin(this.pincode).pipe(take(1)).subscribe((response) => {
+      console.log(response);
     });
   }
 }

@@ -6,6 +6,7 @@ export const Url = {
     api: {
         districts: Constants.baseUrl + '/v2/admin/location/districts',
         states: Constants.baseUrl + '/v2/admin/location/states',
-        findByDistrict: Constants.baseUrl + '/v2/appointment/sessions/public/findByDistrict'
+        findByDistrict: Constants.baseUrl + '/v2/appointment/sessions/public/findByDistrict',
+        findByPin: Constants.baseUrl + '/v2/appointment/sessions/public/findByPin'
     }
 };

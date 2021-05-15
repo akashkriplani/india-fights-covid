@@ -1,3 +1,12 @@
+<mat-form-field appearance="fill" [floatLabel]="floatLabelControl.value">
+  <mat-label>Pincode</mat-label>
+  <input matInput placeholder="Enter the pincode" [(ngModel)]='pincode'>
+</mat-form-field>
+<div class="search">
+  <button mat-raised-button color="primary" (click)="findByPin()">Search</button>
+</div>
+
+<h4>State</h4>
 <mat-form-field appearance="fill">
     <mat-label>Select state</mat-label>
     <mat-select [formControl]="stateControl" required (selectionChange)="getDistrict($event.value)">
@@ -8,13 +17,16 @@
     </mat-select>
     <mat-error *ngIf="stateControl.hasError('required')">Please select a state</mat-error>
 </mat-form-field>
-<mat-form-field appearance="fill" *ngIf="selectedState">
+<ng-container *ngIf="selectedState">
+  <h4>District</h4>
+  <mat-form-field appearance="fill" *ngIf="selectedState">
     <mat-label>Select district</mat-label>
     <mat-select [formControl]="districtControl" required (selectionChange)="findByDistrict($event.value)">
-        <mat-option>Select district</mat-option>
-        <mat-option *ngFor="let district of districts" [value]="district">
-            {{ district?.district_name }}
-        </mat-option>
+      <mat-option>Select district</mat-option>
+      <mat-option *ngFor="let district of districts" [value]="district">
+        {{ district?.district_name }}
+      </mat-option>
     </mat-select>
     <mat-error *ngIf="districtControl.hasError('required')">Please select a district</mat-error>
-</mat-form-field>
+  </mat-form-field>
+</ng-container>
