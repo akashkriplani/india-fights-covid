@@ -19,6 +19,14 @@ export class DataService {
     return this._http.get<IDistrictsResponse>(Url.api.districts + `/${stateId}`);
   }
 
+  public findByPin(pincode: number): Observable<any> {
+    const payload = {
+      pincode: pincode.toString(),
+      date: this.getCurrentDate()
+    }
+    return this._http.get<any>(Url.api.findByPin, { params: payload });
+  }
+
   public findByDistrict(districtId: number): Observable<IDistrictWiseInfo> {
     const payload = {
       district_id: districtId.toString(),
