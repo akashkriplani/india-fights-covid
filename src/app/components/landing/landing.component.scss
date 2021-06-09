@@ -1,4 +1,12 @@
-.search {
-  display: inline;
-  padding-left: 12px;
+.pincode-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  & mat-form-field {
+    max-width: 300px;
+  }
+}
+
+.state-container {
+  padding: 20px 0;
 }
