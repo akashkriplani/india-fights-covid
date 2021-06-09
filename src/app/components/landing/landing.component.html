@@ -1,5 +1,10 @@
 <section>
-  <mat-tab-group [color]="'accent'" [backgroundColor]="'accent'" dynamicHeight [(selectedIndex)]="selectedIndex">
+  <mat-tab-group
+  [color]="'accent'"
+  [backgroundColor]="'accent'"
+  animationDuration="350ms"
+  dynamicHeight
+  [(selectedIndex)]="selectedIndex">
     <mat-tab label="Search by PIN">
       <div class="pincode-container">
         <mat-form-field appearance="fill" [floatLabel]="floatLabelControl.value">
