@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
 import { Observable } from 'rxjs';
 import { Url } from '../constants/Constants';
-import { IDistrictsResponse, IDistrictWiseInfo, IStatesResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,15 @@ import { IDistrictsResponse, IDistrictWiseInfo, IStatesResponse } from '../inter
 export class DataService {
 
   constructor(private _http: HttpClient) { }
+
+  public confirmOTP(payload: IConfirmOTPPayload): Observable<IConfirmOTPResponse> {
+    return this._http.post<IConfirmOTPResponse>(Url.api.verifyOTP, payload);
+  }
+
+  public generateOTP(mobile: string): Observable<IGenerateOTPResponse> {
+    const requestPayload: IGenerateOTPPayload = { mobile };
+    return this._http.post<IGenerateOTPResponse>(Url.api.generateOTP, requestPayload);
+  }
 
   public getStates(): Observable<IStatesResponse> {
     return this._http.get<IStatesResponse>(Url.api.states);
@@ -19,12 +28,12 @@ export class DataService {
     return this._http.get<IDistrictsResponse>(Url.api.districts + `/${stateId}`);
   }
 
-  public findByPin(pincode: number): Observable<any> {
+  public findByPin(pincode: number): Observable<IDistrictWiseInfo> {
     const payload = {
       pincode: pincode.toString(),
       date: this.getCurrentDate()
     }
-    return this._http.get<any>(Url.api.findByPin, { params: payload });
+    return this._http.get<IDistrictWiseInfo>(Url.api.findByPin, { params: payload });
   }
 
   public findByDistrict(districtId: number): Observable<IDistrictWiseInfo> {
