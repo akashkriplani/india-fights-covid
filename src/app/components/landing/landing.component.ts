@@ -32,13 +32,17 @@ export class LandingComponent implements OnInit {
 
   getDistrict(state: IStates): void {
     this.selectedState = state;
-    this.dataService.getDistricts(this.selectedState.state_id).pipe((take(1))).subscribe((response: IDistrictsResponse) => {
-      this.districts = response.districts;
-    });
+    this.districtControl.setValue('');
+    this.districtControl.markAsUntouched();
+    if (this.selectedState) {
+      this.dataService.getDistricts(this.selectedState.state_id)
+        .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
+          this.districts = response.districts;
+        });
+    }
   }
 
-  findByDistrict(district: IDistricts): void {
-    this.selectedDistrict = district;
+  findByDistrict(): void {
     this.dataService.findByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
       this.districtWiseInfo = response;
       console.log(this.districtWiseInfo);
