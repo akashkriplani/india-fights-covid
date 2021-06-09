@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../servcies/data.service';
-import { take } from 'rxjs/operators';
-import { IDistricts, IDistrictWiseInfo, IStates, IStatesResponse } from 'src/app/interfaces';
 import { FormControl, Validators } from '@angular/forms';
+import { DataService } from '../../services/data.service';
+import { take } from 'rxjs/operators';
+import { IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 
 @Component({
   selector: 'ifc-landing',
@@ -31,20 +31,21 @@ export class LandingComponent implements OnInit {
 
   getDistrict(state: IStates): void {
     this.selectedState = state;
-    this.dataService.getDistricts(this.selectedState.state_id).pipe((take(1))).subscribe((response) => {
+    this.dataService.getDistricts(this.selectedState.state_id).pipe((take(1))).subscribe((response: IDistrictsResponse) => {
       this.districts = response.districts;
     });
   }
 
   findByDistrict(district: IDistricts): void {
     this.selectedDistrict = district;
-    this.dataService.findByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response) => {
+    this.dataService.findByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
       this.districtWiseInfo = response;
+      console.log(this.districtWiseInfo);
     });
   }
 
   findByPin(): void {
-    this.dataService.findByPin(this.pincode).pipe(take(1)).subscribe((response) => {
+    this.dataService.findByPin(this.pincode).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
       console.log(response);
     });
   }
