@@ -1,0 +1,39 @@
+.login-container {
+  display: flex;
+}
+.login-grid-tile {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("../../../../assets/images/login-screen.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0%;
+}
+
+.login-card {
+  max-width: 400px;
+}
+
+.login-header-image {
+  background-image: url("../../../../assets/images/login-screen.svg");
+  background-size: cover;
+}
+
+.login-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.login-full-width {
+  width: 100%;
+}
+
+button.mat-raised-button {
+  width: 100%;
+}

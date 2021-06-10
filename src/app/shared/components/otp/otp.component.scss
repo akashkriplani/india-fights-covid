@@ -1,0 +1,28 @@
+.otp-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.otp-form-field {
+  display: flex;
+  .mat-form-field {
+    max-width: 30px;
+    &:not(:first-child) {
+      padding-left: 10px;
+    }
+  }
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  bottom: 0;
+}
+::ng-deep
+  .otp-container.mat-form-field-appearance-legacy
+  .mat-form-field-infix {
+  text-align: center;
+  border: 2px solid #3f51b5;
+}
+::ng-deep .otp-container.mat-form-field-invalid .mat-form-field-infix {
+  text-align: center;
+  border: 2px solid #ff4081;
+}
