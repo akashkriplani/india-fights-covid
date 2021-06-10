@@ -13,6 +13,7 @@ import { OtpComponent } from './components/otp/otp.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MaskPhonePipe } from './pipes/mask-phone.pipe';
+import { FormatPhonePipe } from './pipes/format-phone.pipe';
 
 const materialModules = [
   MatFormFieldModule,
@@ -31,7 +32,8 @@ const components = [
 ];
 
 const pipes = [
-  MaskPhonePipe
+  MaskPhonePipe,
+  FormatPhonePipe
 ];
 
 const directives = [
