@@ -1,14 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+enum MaskKey {
+  ASTERISK = '*',
+  CROSS = 'X'
+}
+
 @Pipe({
   name: 'maskPhone'
 })
 
 export class MaskPhonePipe implements PipeTransform {
-  transform(value: string): string {
-    if (!value) {
-      return;
-    }
-    return value.replace(value.substring(0, 6), 'XXX XXX ');
+  transform(number: string, maskNumberLength: number = 4, maskKey: MaskKey = MaskKey.CROSS): string {
+    const visibleDigits = maskNumberLength;
+    let maskedSection = number.slice(0, -visibleDigits);
+    let visibleSection = number.slice(-visibleDigits);
+    return maskedSection.replace(/./g, maskKey) + visibleSection;
   }
 }

@@ -6,7 +6,7 @@
       <mat-card-header>
         <div mat-card-avatar class="login-header-image"></div>
         <mat-card-title>OTP Verification</mat-card-title>
-        <mat-card-subtitle>An OTP has been sent to {{mobileNumberControl?.value | maskPhone }}</mat-card-subtitle>
+        <mat-card-subtitle>An OTP has been sent to {{mobileNumberControl?.value | maskPhone | formatPhone }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <ifc-otp [buttonLabel]="'Verify & Proceed'" (submit)="verifyOTP($event)"></ifc-otp>
