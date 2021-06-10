@@ -1,0 +1,16 @@
+.u-flexGrow1 {
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+}
+
+.nav-items ul li {
+  cursor: pointer;
+  font-size: 16px;
+}
+ul li:not(:first-child) {
+  padding-left: 10px;
+}

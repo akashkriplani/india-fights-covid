@@ -1,0 +1,12 @@
+<div class="container-fluid">
+  <form class="otp-form" (ngSubmit)="onSubmit()" [formGroup]="otpForm">
+    <h3>Enter your OTP </h3>
+    <div class="otp-form-field">
+      <mat-form-field class="otp-container" *ngFor="let input of formInput;  index as i">
+        <input #formRow type="text" matInput autocomplete="off" formControlName="{{input}}" class="form-control" maxlength="1"
+          (keyup)="keyUpEvent($event, i)">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="accent" [disabled]="!otpForm.valid">Submit</button>
+  </form>
+</div>

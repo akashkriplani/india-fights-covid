@@ -3,18 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -30,13 +25,8 @@ import { LandingComponent } from './components/landing/landing.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTabsModule
+    SharedModule.forRoot(),
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

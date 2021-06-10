@@ -1,0 +1,37 @@
+<div class="login-container">
+  <div class="login-grid-tile">
+  </div>
+  <mat-card class="login-card">
+    <mat-card-header>
+      <div mat-card-avatar class="login-header-image"></div>
+      <mat-card-title>Login</mat-card-title>
+      <mat-card-subtitle>Register or Login for Vaccination</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>An OTP will be sent to your mobile number for verification</p>
+      <form class="login-form">
+        <mat-form-field class="login-full-width">
+          <mat-label>Mobile number</mat-label>
+          <input type="text" autocomplete="off" matInput [formControl]="mobileNumberControl" placeholder="Enter your mobile number (Ex. 9876543210)" (keydown)="validateNumber($event)" maxlength="10">
+          <mat-error *ngIf="mobileNumberControl.hasError('required')">Mobile number is required</mat-error>
+          <mat-error *ngIf="mobileNumberControl.hasError('pattern') && !mobileNumberControl.hasError('required')">
+            Mobile number should be of 10 digits
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <ng-container *ngIf="showOTPTemplate; else getOTPTemplate">
+      <ifc-otp (submit)="verifyOTP($event)"></ifc-otp>
+      <ng-container [counter]="180" [interval]="1000" (value)="count = $event">
+        <span>{{ count }}</span>
+      </ng-container>
+    </ng-container>
+    <ng-template #getOTPTemplate>
+      <mat-card-actions>
+        <button mat-raised-button mat-accent color="accent" [disabled]="!mobileNumberControl.valid" (click)="generateOTP()">
+          Get OTP
+        </button>
+      </mat-card-actions>
+    </ng-template>
+  </mat-card>
+</div>

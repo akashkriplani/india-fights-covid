@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: LandingComponent
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   }
 ];
 
