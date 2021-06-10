@@ -12,6 +12,7 @@ import { CounterDirective } from './directives/counter.directive';
 import { OtpComponent } from './components/otp/otp.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MaskPhonePipe } from './pipes/mask-phone.pipe';
 
 const materialModules = [
   MatFormFieldModule,
@@ -25,10 +26,22 @@ const materialModules = [
   MatGridListModule
 ];
 
+const components = [
+  OtpComponent
+];
+
+const pipes = [
+  MaskPhonePipe
+];
+
+const directives = [
+  CounterDirective
+];
+
 @NgModule({
-  declarations: [CounterDirective, OtpComponent],
+  declarations: [...components, ...directives, ...pipes],
   imports: [...materialModules, ReactiveFormsModule, CommonModule],
-  exports: [...materialModules, CounterDirective, OtpComponent]
+  exports: [...materialModules, ...components, ...directives, ...pipes]
 })
 
 export class SharedModule {

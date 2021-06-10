@@ -19,7 +19,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent implements OnInit {
-  public count: number = 0;
+  public count: number = 10;
   public matcher = new MyErrorStateMatcher();
   public mobileNumberControl = new FormControl('', [
     Validators.required,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChildren, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CryptoService } from '../../../services/crypto.service';
 
@@ -8,17 +8,39 @@ import { CryptoService } from '../../../services/crypto.service';
   styleUrls: ['./otp.component.scss']
 })
 export class OtpComponent implements OnInit {
+  @Input() public buttonLabel: string = 'Submit';
+  @Output() public submit: EventEmitter<string> = new EventEmitter<string>();
+  @ViewChildren('formRow') rows: any;
   public formInput = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
   public otpForm: FormGroup;
-  @Output() public submit: EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChildren('formRow') rows: any;
+  constructor(private cryptoService: CryptoService) {}
 
   ngOnInit() {
     this.otpForm = this.createForm(this.formInput);
   }
 
-  constructor(private cryptoService: CryptoService) {}
+
+  keyUpEvent(event: KeyboardEvent, index: number): void {
+    let pos = index;
+    if (event.keyCode === 8 && event.which === 8) {
+      pos = index - 1 ;
+    } else {
+      pos = index + 1 ;
+    }
+    if (pos > -1 && pos < this.formInput.length) {
+      this.rows._results[pos].nativeElement.focus();
+    }
+  }
+
+  onSubmit(): void {
+    let otpCode = '';
+    for (const key in this.otpForm.value) {
+      otpCode += this.otpForm.value[key];
+    }
+    const encryptedOTP = this.cryptoService.encrypt(otpCode);
+    this.submit.emit(encryptedOTP);
+  }
 
   private createForm(elements: string[]): FormGroup {
     const group: any = {};
@@ -28,28 +50,6 @@ export class OtpComponent implements OnInit {
     });
 
     return new FormGroup(group);
-  }
-
-  keyUpEvent(event: KeyboardEvent, index: number) {
-    let pos = index;
-    if (event.keyCode === 8 && event.which === 8) {
-      pos = index - 1 ;
-    } else {
-      pos = index + 1 ;
-    }
-    if (pos > -1 && pos < this.formInput.length ) {
-      this.rows._results[pos].nativeElement.focus();
-    }
-
-  }
-
-  onSubmit() {
-    let otpCode = '';
-    for (const key in this.otpForm.value) {
-      otpCode += this.otpForm.value[key];
-    }
-    const encryptedOTP = this.cryptoService.encrypt(otpCode);
-    this.submit.emit(encryptedOTP);
   }
 
 }
