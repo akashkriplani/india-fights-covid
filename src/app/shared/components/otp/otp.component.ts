@@ -23,10 +23,11 @@ export class OtpComponent implements OnInit {
 
   keyUpEvent(event: KeyboardEvent, index: number): void {
     let pos = index;
+    // Backspace / delete
     if (event.keyCode === 8 && event.which === 8) {
-      pos = index - 1 ;
+      pos = index - 1;
     } else {
-      pos = index + 1 ;
+      pos = index + 1;
     }
     if (pos > -1 && pos < this.formInput.length) {
       this.rows._results[pos].nativeElement.focus();
