@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DataService } from '../../../services/data.service';
 import { take } from 'rxjs/operators';
-import { IConfirmOTPPayload, IConfirmOTPResponse, IGenerateOTPResponse } from 'src/app/interfaces';
+import { IConfirmOTPPayload, IConfirmOTPResponse, IGenerateOTPResponse } from '../../../interfaces';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,7 +20,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent implements OnInit {
-  public count: number = 10;
+  public count: number = 1;
   public matcher = new MyErrorStateMatcher();
   public mobileNumberControl = new FormControl('', [
     Validators.required,
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
   public txnId: string;
   public showOTPTemplate: boolean;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     }
     this.dataService.confirmOTP(payload)
       .pipe(take(1)).subscribe((response: IConfirmOTPResponse) => {
-      console.log(response);
+        this.router.navigate(['/']);
     })
   }
 
