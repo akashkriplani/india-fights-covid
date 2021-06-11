@@ -14,7 +14,6 @@ export const SocialMediaLinks = {
 
 export const Url = {
   api: {
-    calendarByCenter: Constants.baseUrl + '/v2/appointment/sessions/public/calendarByCenter',
     calendarByDistrict: Constants.baseUrl + '/v2/appointment/sessions/public/calendarByDistrict',
     calendarByPin: Constants.baseUrl + '/v2/appointment/sessions/public/calendarByPin',
     districts: Constants.baseUrl + '/v2/admin/location/districts',
