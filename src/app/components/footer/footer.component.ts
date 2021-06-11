@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocialMediaLinks } from '../../constants/Constants';
 
 @Component({
   selector: 'ifc-footer',
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
 
   public currentYear: number;
-  constructor() { }
+  public links: {
+    [key: string]: string
+  };
 
   ngOnInit(): void {
+    this.links = SocialMediaLinks;
     this.currentYear = new Date().getFullYear();
   }
 
