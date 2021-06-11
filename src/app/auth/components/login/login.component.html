@@ -33,11 +33,11 @@
           <mat-form-field class="login-full-width">
             <mat-label>Mobile number</mat-label>
             <input type="text" autocomplete="off" matInput [formControl]="mobileNumberControl"
-              placeholder="Enter your mobile number (Ex. 9876543210)" (keydown)="validateNumber($event)" maxlength="10">
+              placeholder="Enter your mobile number (Ex. 9876543210)" (keydown)="validateNumber($event)" maxlength="10" (keyup.enter)="generateOTP()">
             <mat-error *ngIf="mobileNumberControl.hasError('required')">
               Mobile number is required
             </mat-error>
-            <mat-error *ngIf="mobileNumberControl.hasError('pattern') && !mobileNumberControl.hasError('required')">
+            <mat-error *ngIf="mobileNumberControl.hasError('pattern') && !mobileNumberControl.hasError('required') || mobileNumberControl.hasError('maxlength')">
               Mobile number should be of 10 digits
             </mat-error>
           </mat-form-field>

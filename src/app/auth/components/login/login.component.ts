@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   public matcher = new MyErrorStateMatcher();
   public mobileNumberControl = new FormControl('', [
     Validators.required,
+    Validators.maxLength(10),
     Validators.pattern('^[0-9]{10}$')
   ]);
   public txnId: string;
@@ -54,15 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
   validateNumber(event): void {
-    const keyCode = event.keyCode;
-
-    const excludedKeys = [8, 37, 39, 46];
-
-    if (!((keyCode >= 48 && keyCode <= 57) ||
-      (keyCode >= 96 && keyCode <= 105) ||
-      (excludedKeys.includes(keyCode)))) {
-      event.preventDefault();
-    }
+    this.dataService.validateNumber(event);
   }
 
 }
