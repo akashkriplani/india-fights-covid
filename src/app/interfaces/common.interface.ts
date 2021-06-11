@@ -61,12 +61,7 @@ export interface IConfirmOTPResponse {
   token: string;
 }
 
-export interface ICalendarByPinPayload {
-  date: string;
-  pincode: string;
-}
-
-export interface ICalendarByPinResponse {
+export interface ICalendarResponse {
   centers: ICenters[];
 }
 

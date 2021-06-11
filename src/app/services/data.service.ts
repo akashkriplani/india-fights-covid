@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICalendarByPinPayload, ICalendarByPinResponse, IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
+import { ICalendarResponse, IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
 import { Observable } from 'rxjs';
 import { Url } from '../constants/Constants';
 
@@ -11,12 +11,20 @@ export class DataService {
 
   constructor(private _http: HttpClient) { }
 
-  public calendarByPin(pincode: string): Observable<ICalendarByPinResponse> {
+  public calendarByDistrict(districtId: number): Observable<ICalendarResponse> {
+    const payload = {
+      district_id: districtId.toString(),
+      date: this.getCurrentDate()
+    };
+    return this._http.get<ICalendarResponse>(Url.api.calendarByDistrict, { params: payload });
+  }
+
+  public calendarByPin(pincode: string): Observable<ICalendarResponse> {
     const payload = {
       date: this.getCurrentDate(),
       pincode: pincode
-    }
-    return this._http.get<ICalendarByPinResponse>(Url.api.calendarByPin, { params: payload });
+    };
+    return this._http.get<ICalendarResponse>(Url.api.calendarByPin, { params: payload });
   }
 
   public confirmOTP(payload: IConfirmOTPPayload): Observable<IConfirmOTPResponse> {

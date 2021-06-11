@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DataService } from '../../services/data.service';
+import { ICalendarResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 import { take } from 'rxjs/operators';
-import { ICalendarByPinResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 
 @Component({
   selector: 'ifc-landing',
@@ -30,13 +31,15 @@ export class LandingComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getStates().pipe(take(1)).subscribe((response: IStatesResponse) => {
-      this.states = response.states;
-    });
+
+  }
+
+  calendarByDistrict(): void {
+    this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => console.log(response));
   }
 
   calendarByPin(): void {
-    this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarByPinResponse) => console.log(response.centers));
+    this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarResponse) => console.log(response.centers));
   }
 
   getDistrict(state: IStates): void {
@@ -45,9 +48,17 @@ export class LandingComponent implements OnInit {
     this.districtControl.markAsUntouched();
     if (this.selectedState) {
       this.dataService.getDistricts(this.selectedState.state_id)
-        .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
-          this.districts = response.districts;
-        });
+      .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
+        this.districts = response.districts;
+      });
+    }
+  }
+
+  getStates(event: MatTabChangeEvent): void {
+    if (event.tab.textLabel === 'Search by District' && !this.states) {
+      this.dataService.getStates().pipe(take(1)).subscribe((response: IStatesResponse) => {
+        this.states = response.states;
+      });
     }
   }
 
