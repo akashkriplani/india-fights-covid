@@ -9,12 +9,12 @@
       <div class="pincode-container">
         <mat-form-field appearance="fill" [floatLabel]="floatLabelControl.value">
           <mat-label>Pincode</mat-label>
-          <input matInput autocomplete="off" placeholder="Enter the pincode" maxlength="6" [formControl]="pincodeControl" (keyup.enter)="findByPin()" (keydown)="validateNumber($event)">
+          <input matInput autocomplete="off" placeholder="Enter the pincode" maxlength="6" [formControl]="pincodeControl" (keyup.enter)="calendarByPin()" (keydown)="validateNumber($event)">
           <mat-error *ngIf="pincodeControl.hasError('required')">Pincode is required</mat-error>
           <mat-error *ngIf="pincodeControl.hasError('minlength') || pincodeControl.hasError('maxlength')">Pincode should be of 6 digits</mat-error>
         </mat-form-field>
         <div class="search">
-          <button mat-raised-button color="accent" (click)="findByPin()" [disabled]="!pincodeControl.valid">Search</button>
+          <button mat-raised-button color="accent" (click)="calendarByPin()" [disabled]="!pincodeControl.valid">Search</button>
         </div>
       </div>
     </mat-tab>

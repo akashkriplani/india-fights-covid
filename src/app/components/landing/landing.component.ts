@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { take } from 'rxjs/operators';
-import { IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
+import { ICalendarByPinResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 
 @Component({
   selector: 'ifc-landing',
@@ -33,6 +33,10 @@ export class LandingComponent implements OnInit {
     this.dataService.getStates().pipe(take(1)).subscribe((response: IStatesResponse) => {
       this.states = response.states;
     });
+  }
+
+  calendarByPin(): void {
+    this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarByPinResponse) => console.log(response.centers));
   }
 
   getDistrict(state: IStates): void {

@@ -21,26 +21,26 @@ export interface IDistrictWiseInfo {
 }
 
 export interface ISessions {
-  address: string;
+  address?: string;
   available_capacity: number;
   available_capacity_dose1: number;
   available_capacity_dose2: number;
-  block_name: string;
-  center_id: number;
+  block_name?: string;
+  center_id?: number;
   date: string;
-  district_name: string;
-  fee: string;
-  fee_type: string;
-  from: string;
-  lat: number;
-  long: number;
+  district_name?: string;
+  fee?: string;
+  fee_type?: string;
+  from?: string;
+  lat?: number;
+  long?: number;
   min_age_limit: number;
-  name: string;
-  pincode: number;
+  name?: string;
+  pincode?: number;
   session_id: string;
   slots: string[];
-  state_name: string;
-  to: string;
+  state_name?: string;
+  to?: string;
   vaccine: string;
 }
 
@@ -59,4 +59,29 @@ export interface IConfirmOTPPayload {
 
 export interface IConfirmOTPResponse {
   token: string;
+}
+
+export interface ICalendarByPinPayload {
+  date: string;
+  pincode: string;
+}
+
+export interface ICalendarByPinResponse {
+  centers: ICenters[];
+}
+
+export interface ICenters {
+  address: string;
+  block_name: string;
+  center_id: number;
+  district_name: string;
+  fee_type: string;
+  from: string;
+  lat: number;
+  long: number;
+  name: string;
+  pincode: number;
+  sessions: ISessions[];
+  state_name: string;
+  to: string;
 }
