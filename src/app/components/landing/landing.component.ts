@@ -20,7 +20,12 @@ export class LandingComponent implements OnInit {
   public selectedState: IStates;
   public stateControl = new FormControl('', Validators.required);
   public districtControl = new FormControl('', Validators.required);
-  public pincode: number;
+  public pincodeControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.maxLength(6),
+    Validators.pattern('^[0-9]{6}$')
+  ]);
 
   constructor(private dataService: DataService) { }
 
@@ -50,8 +55,12 @@ export class LandingComponent implements OnInit {
   }
 
   findByPin(): void {
-    this.dataService.findByPin(this.pincode).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
+    this.dataService.findByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
       console.log(response);
     });
+  }
+
+  validateNumber(event: any): void {
+    this.dataService.validateNumber(event);
   }
 }
