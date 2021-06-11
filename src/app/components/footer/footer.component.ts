@@ -9,9 +9,7 @@ import { SocialMediaLinks } from '../../constants/Constants';
 export class FooterComponent implements OnInit {
 
   public currentYear: number;
-  public links: {
-    [key: string]: string
-  };
+  public links: { [key: string]: string };
 
   ngOnInit(): void {
     this.links = SocialMediaLinks;
