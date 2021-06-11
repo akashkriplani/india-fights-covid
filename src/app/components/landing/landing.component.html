@@ -4,6 +4,7 @@
   [backgroundColor]="'accent'"
   animationDuration="350ms"
   dynamicHeight
+  (selectedTabChange)="getStates($event)"
   [(selectedIndex)]="selectedIndex">
     <mat-tab label="Search by PIN">
       <div class="pincode-container">
@@ -44,7 +45,7 @@
             <mat-error *ngIf="districtControl.hasError('required')">Please select a district</mat-error>
           </mat-form-field>
           <div class="search">
-            <button mat-raised-button color="accent" [disabled]="!districtControl.valid" (click)="findByDistrict()">Search</button>
+            <button mat-raised-button color="accent" [disabled]="!districtControl.valid" (click)="calendarByDistrict()">Search</button>
           </div>
         </ng-container>
       </div>
