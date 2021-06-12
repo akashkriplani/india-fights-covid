@@ -80,3 +80,8 @@ export interface ICenters {
   state_name: string;
   to: string;
 }
+
+export interface IAppointmentTableData {
+  center: ICenters;
+  sessions: ISessions[];
+}

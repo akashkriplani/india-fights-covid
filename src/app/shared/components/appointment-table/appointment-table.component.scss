@@ -1,6 +1,27 @@
 table {
-  padding-top: 10px;
+  border: 1px solid #e0e0e0;
   width: 100%;
+}
+
+table th {
+  background-color: #e0e0e0;
+  color: #000;
+  font-size: 15px;
+}
+
+table td {
+  padding-top: 10px;
+}
+
+table th,
+table td {
+  border-right: 1px solid #e0e0e0;
+  padding-left: 8px;
+}
+
+table th:not(:first-child),
+table td:not(:first-child) {
+  text-align: center;
 }
 
 .mat-column-center {
