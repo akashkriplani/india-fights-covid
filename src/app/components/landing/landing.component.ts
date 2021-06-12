@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DataService } from '../../services/data.service';
@@ -10,14 +10,14 @@ import { take } from 'rxjs/operators';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent {
 
   public districts: IDistricts[];
   public districtWiseInfo: IDistrictWiseInfo;
   public floatLabelControl = new FormControl('auto');
   public states: IStates[];
   public selectedDistrict: IDistricts;
-  public selectedIndex: number = 0;
+  public selectedIndex: number = 1;
   public selectedState: IStates;
   public stateControl = new FormControl('', Validators.required);
   public districtControl = new FormControl('', Validators.required);
@@ -27,15 +27,26 @@ export class LandingComponent implements OnInit {
     Validators.maxLength(6),
     Validators.pattern('^[0-9]{6}$')
   ]);
+  public tableResponse: ICalendarResponse;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-
+    if (this.selectedIndex === 1) {
+      const event: MatTabChangeEvent = <MatTabChangeEvent>{
+        tab: {
+          textLabel: 'Search by District'
+        }
+      };
+      this.getStates(event);
+    }
   }
 
   calendarByDistrict(): void {
-    this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => console.log(response));
+    this.tableResponse = null;
+    this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => {
+      this.tableResponse = response;
+    });
   }
 
   calendarByPin(): void {

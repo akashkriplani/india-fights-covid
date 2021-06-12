@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ICalendarResponse, IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
 import { Observable } from 'rxjs';
 import { Url } from '../constants/Constants';
+import { DateSeparator } from '../shared/enumerations';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,18 @@ export class DataService {
     return this._http.post<IGenerateOTPResponse>(Url.api.generateOTP, requestPayload);
   }
 
+  public getCurrentDate(currentDate: Date = null, nameOfMonth: boolean = false, separator: DateSeparator = DateSeparator.HYPHEN): string {
+    const dateObj = currentDate ? currentDate : new Date();
+    const date = dateObj.getDate();
+    const monthOfYear = dateObj.getMonth() + 1;
+    const monthNumber = monthOfYear < 10 ? '0' + monthOfYear : monthOfYear;
+    const monthName = dateObj.toLocaleString('default', { month: 'short' });
+    const month = nameOfMonth ? monthName : monthNumber;
+    const year = dateObj.getFullYear();
+
+    return date + separator + month + separator + year;
+  }
+
   public getDistricts(stateId: number): Observable<IDistrictsResponse> {
     return this._http.get<IDistrictsResponse>(Url.api.districts + `/${stateId}`);
   }
@@ -70,13 +83,5 @@ export class DataService {
       (excludedKeys.includes(keyCode)))) {
       event.preventDefault();
     }
-  }
-
-  private getCurrentDate(separator: string = '-'): string {
-    const date = new Date().getDate();
-    const month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
-
-    return date + separator + month + separator + year;
   }
 }

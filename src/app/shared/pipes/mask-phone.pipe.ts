@@ -1,9 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-enum MaskKey {
-  ASTERISK = '*',
-  CROSS = 'X'
-}
+import { MaskKey } from '../enumerations';
 
 @Pipe({
   name: 'maskPhone'
