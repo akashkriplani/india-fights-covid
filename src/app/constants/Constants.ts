@@ -3,6 +3,7 @@ const Api = {
 };
 
 export const Constants = {
+  BOOKED: 'Booked',
   NO_OF_DAYS: 7,
   PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
   PAGE_SIZE: 10

@@ -3,7 +3,7 @@
     <ng-container *ngFor="let col of appointmentTableColumns" [matColumnDef]="col?.columnDef" [sticky]="col?.sticky">
       <div>
         <th mat-header-cell *matHeaderCellDef> {{col?.header}} </th>
-        <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element)"></td>
+        <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element) | safe: 'html'"></td>
       </div>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

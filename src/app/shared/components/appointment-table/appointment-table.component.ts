@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from '../../../services/data.service';
@@ -139,9 +139,14 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
     const filteredSessions = sessions.filter(s => s.date === headerDate);
     if (filteredSessions?.length > 0) {
       filteredSessions.forEach(s => {
-        str += `<p>${s.available_capacity}</p><p>${s.vaccine}</p><p>${s.min_age_limit}+</p>`
+        if (s.available_capacity === 0) {
+          str += `<div class="slot-container"><p class="slot-full">${Constants.BOOKED}</p><p>${s.vaccine}</p><small>Age ${s.min_age_limit}+</small></div>`
+        } else {
+          str += `<div class="slot-container"><p class="slot-available"><span class="dose-1">D1 - ${s.available_capacity_dose1}</span> ${s.available_capacity} <span class="dose-2">D2 - ${s.available_capacity_dose2}</span></p><p>${s.vaccine}</p><small>Age ${s.min_age_limit}+</small></div>`
+        }
       });
     }
+
     return str === '' ? 'NA' : str;
   }
 

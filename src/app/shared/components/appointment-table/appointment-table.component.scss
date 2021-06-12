@@ -16,7 +16,7 @@ table td {
 table th,
 table td {
   border-right: 1px solid #e0e0e0;
-  padding-left: 8px;
+  padding: 1px;
 }
 
 table th:not(:first-child),
@@ -45,4 +45,37 @@ td.mat-column-date1 {
 
 .text-center {
   text-align: center;
+}
+
+::ng-deep .mat-cell .slot-container {
+  padding: 4px;
+}
+
+::ng-deep .mat-cell .slot-container .slot-full {
+  background-color: #f44336;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+::ng-deep .mat-cell .slot-container .slot-available {
+  background-color: #a9d18e;
+  border: 1px solid #000;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  .dose-1 {
+    border-right: 1px solid;
+    float: left;
+    padding: 0 4px;
+  }
+  .dose-2 {
+    border-left: 1px solid;
+    float: right;
+    padding: 0 4px;
+  }
+}
+
+::ng-deep small {
+  color: #ff4081;
 }
