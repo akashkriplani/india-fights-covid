@@ -1,10 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-enum PhoneNumberSeparator {
-  SPACE = ' ',
-  HYPHEN = '-',
-  DOT = '.'
-}
+import { PhoneNumberSeparator } from '../enumerations';
 
 @Pipe({
   name: 'formatPhone'
