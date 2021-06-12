@@ -16,3 +16,7 @@ export enum PhoneNumberSeparator {
   SPACE = ' '
 }
 
+export enum FeeType {
+  FREE = 'Free',
+  PAID = 'Paid'
+}

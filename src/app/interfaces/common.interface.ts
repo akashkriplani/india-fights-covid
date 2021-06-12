@@ -79,6 +79,12 @@ export interface ICenters {
   sessions: ISessions[];
   state_name: string;
   to: string;
+  vaccine_fees?: IVaccineDetails[];
+}
+
+export interface IVaccineDetails {
+  fee: string;
+  vaccine: string;
 }
 
 export interface IAppointmentTableData {
