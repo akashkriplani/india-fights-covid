@@ -1,30 +1,6 @@
-<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-  </ng-container>
-
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table> -->
-{{response | json }}
 <ng-container *ngIf="response?.centers?.length > 0; else noCenterAvailableTemplate">
-  <table mat-table [dataSource]="mattabledataSource" class="mat-elevation-z8">
-    <ng-container *ngFor="let col of displaycolumndefs" [matColumnDef]="col?.columnDef" [sticky]="col?.sticky">
+  <table mat-table [dataSource]="matTableDataSource" class="mat-elevation-z8">
+    <ng-container *ngFor="let col of appointmentTableColumns" [matColumnDef]="col?.columnDef" [sticky]="col?.sticky">
       <div>
         <th mat-header-cell *matHeaderCellDef> {{col?.header}} </th>
         <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element)"></td>
@@ -33,8 +9,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator #paginator [length]="response?.centers?.length" [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+  <mat-paginator
+    #paginator
+    color="primary"
+    [length]="matTableDataSource?.data?.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons>
   </mat-paginator>
 </ng-container>
 <ng-template #noCenterAvailableTemplate>
