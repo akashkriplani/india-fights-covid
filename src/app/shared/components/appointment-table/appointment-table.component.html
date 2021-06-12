@@ -1,8 +1,15 @@
 <ng-container *ngIf="response?.centers?.length > 0; else noCenterAvailableTemplate">
-  <table mat-table [dataSource]="matTableDataSource" class="mat-elevation-z8">
+  <table mat-table
+    [dataSource]="matTableDataSource"
+    matSort
+    matSortActive="center"
+    matSortDirection="asc"
+    (matSortChange)="sortTableData()"
+    class="mat-elevation-z8"
+    >
     <ng-container *ngFor="let col of appointmentTableColumns" [matColumnDef]="col?.columnDef" [sticky]="col?.sticky">
       <div>
-        <th mat-header-cell *matHeaderCellDef> {{col?.header}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col?.header}}</th>
         <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element) | safe: 'html'"></td>
       </div>
     </ng-container>

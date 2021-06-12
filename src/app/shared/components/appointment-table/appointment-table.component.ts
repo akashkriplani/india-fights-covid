@@ -1,23 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from '../../../services/data.service';
 import { IAppointmentTableData, ICalendarResponse, ICenters, ISessions } from '../../../interfaces/common.interface';
+import { ColumnDefinition } from './column-definition';
 import { Constants } from '../../../constants/Constants';
 import { DateSeparator } from '../../enumerations';
-
-export  class ColumnDefinition {
-  columnDef: string;
-  header: string;
-  cell: any;
-  sticky: boolean;
-  constructor(_columnDef: string, _header: string, _cell: any, _sticky: boolean) {
-    this.columnDef = _columnDef;
-    this.header = _header;
-    this.cell = _cell;
-    this.sticky = _sticky;
-  }
-}
 
 @Component({
   selector: 'ifc-appointment-table',
@@ -28,59 +17,69 @@ export  class ColumnDefinition {
 export class AppointmentTableComponent implements OnInit, AfterViewInit {
   public appointmentTableColumns: ColumnDefinition[] = [
     {
-      columnDef: 'center', header: '', sticky: true, cell: (element: IAppointmentTableData) => {
-        return this.buildAddressInfo(element.center);
-      }
+      columnDef: 'center',
+      header: '',
+      sticky: true,
+      enableSort: true,
+      cell: (element: IAppointmentTableData) => this.buildAddressInfo(element.center)
     },
     {
-      columnDef: 'date1', header: 'Date 1', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[1].header);
-      }
+      columnDef: 'date1',
+      header: 'Date 1',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[1].header)
     },
     {
-      columnDef: 'date2', header: 'Date 2', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[2].header);
-      }
+      columnDef: 'date2',
+      header: 'Date 2',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[2].header)
     },
     {
-      columnDef: 'date3', header: 'Date 3', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[3].header);
-      }
+      columnDef: 'date3',
+      header: 'Date 3',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[3].header)
     },
     {
-      columnDef: 'date4', header: 'Date 4', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[4].header);
-      }
+      columnDef: 'date4',
+      header: 'Date 4',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[4].header)
     },
     {
-      columnDef: 'date5', header: 'Date 5', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[5].header);
-      }
+      columnDef: 'date5',
+      header: 'Date 5',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[5].header)
     },
     {
-      columnDef: 'date6', header: 'Date 6', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[6].header);
-      }
+      columnDef: 'date6',
+      header: 'Date 6',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[6].header)
     },
     {
-      columnDef: 'date7', header: 'Date 7', sticky: false, cell: (element: IAppointmentTableData) => {
-
-        return this.buildSessionInfo(element.sessions, this.appointmentTableColumns[7].header);
-      }
+      columnDef: 'date7',
+      header: 'Date 7',
+      sticky: false,
+      enableSort: false,
+      cell: (element: IAppointmentTableData) => this.buildSessionInfo(element.sessions, this.appointmentTableColumns[7].header)
     }
   ];
   public displayedColumns: Array<string> = this.appointmentTableColumns.map(c => c.columnDef);
   public matTableDataSource:  MatTableDataSource<IAppointmentTableData> = new MatTableDataSource<IAppointmentTableData>();
   public pageSizeOptions: number[] = Constants.PAGE_SIZE_OPTIONS;
   public pageSize: number = Constants.PAGE_SIZE;
-  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('paginator') public paginator: MatPaginator;
   @Input() public response: ICalendarResponse;
+  @ViewChild(MatSort) public sort: MatSort;
   public TABLE_DATA: IAppointmentTableData[] = [];
 
   constructor(private cdRef: ChangeDetectorRef, private dataService: DataService) { }
@@ -109,8 +108,29 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
       })
       this.matTableDataSource.data = this.TABLE_DATA;
       this.matTableDataSource.paginator = this.paginator;
+      this.matTableDataSource.sort = this.sort;
+      this.setCustomSort();
+      this.sortTableData();
       this.cdRef.detectChanges();
     }
+  }
+
+  public sortTableData(): void {
+    this.matTableDataSource.data = this.matTableDataSource.sortData(this.matTableDataSource.data, this.sort);
+  }
+  private setCustomSort(): void {
+    this.matTableDataSource.sortData = (data: IAppointmentTableData[], sort: MatSort) => {
+      return data.sort((a: IAppointmentTableData, b: IAppointmentTableData) => {
+        if (!sort.active || sort.direction === '') {
+          return;
+        }
+        const isAsc = sort.direction === 'asc';
+        switch (sort.active) {
+            case 'center': return this.compare(a.center.center_id, b.center.center_id, isAsc);
+            default: return 0;
+        }
+      })
+    };
   }
 
   private buildAddressInfo(center: ICenters): string {
@@ -148,6 +168,10 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
     }
 
     return str === '' ? 'NA' : str;
+  }
+
+  private compare(a: any, b: any, isAsc: boolean): number {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   private getSessionInfo(center: ICenters, columnHeader: string): ISessions[] {
