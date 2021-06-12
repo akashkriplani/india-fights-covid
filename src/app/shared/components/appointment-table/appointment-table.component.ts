@@ -136,7 +136,7 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
   private buildAddressInfo(center: ICenters): string {
     let str = '';
     if (center?.name) {
-      str += `<p>${center.name}`;
+      str += `<p class="center-name">${center.name}`;
     }
 
     if (center?.fee_type === FeeType.PAID) {
@@ -163,7 +163,7 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
 
     if (center?.vaccine_fees?.length > 0) {
       center.vaccine_fees.forEach(v => {
-        str += `<p>${v.vaccine}: &#8377; ${v.fee}</p>`;
+        str += `<p>${v.vaccine}: &#8377;${v.fee}</p>`;
       })
     }
     return str;
@@ -203,7 +203,7 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
       });
     }
 
-    return str === '' ? 'NA' : str;
+    return str === '' ? Constants.NOT_AVAILABLE : str;
   }
 
   private compare(a: any, b: any, isAsc: boolean): number {

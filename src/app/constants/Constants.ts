@@ -5,8 +5,10 @@ const Api = {
 export const Constants = {
   BOOKED: 'Booked',
   NO_OF_DAYS: 7,
+  NOT_AVAILABLE: 'NA',
   PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
-  PAGE_SIZE: 10
+  PAGE_SIZE: 10,
+  STARTING_TAB_INDEX: 0
 };
 
 export const SocialMediaLinks = {
