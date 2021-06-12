@@ -126,7 +126,7 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
         }
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
-            case 'center': return this.compare(a.center.center_id, b.center.center_id, isAsc);
+            case 'center': return this.compare(a.center.name, b.center.name, isAsc);
             default: return 0;
         }
       })
@@ -160,9 +160,29 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
     if (filteredSessions?.length > 0) {
       filteredSessions.forEach(s => {
         if (s.available_capacity === 0) {
-          str += `<div class="slot-container"><p class="slot-full">${Constants.BOOKED}</p><p>${s.vaccine}</p><small>Age ${s.min_age_limit}+</small></div>`
+          str += `
+            <div class="slot-container">
+              <p class="slot-full">${Constants.BOOKED}</p>
+              <p>${s.vaccine}</p>
+              <small>Age ${s.min_age_limit}+</small>
+            </div>`
         } else {
-          str += `<div class="slot-container"><p class="slot-available"><span class="dose-1">D1 - ${s.available_capacity_dose1}</span> ${s.available_capacity} <span class="dose-2">D2 - ${s.available_capacity_dose2}</span></p><p>${s.vaccine}</p><small>Age ${s.min_age_limit}+</small></div>`
+          str += `
+          <div class="slot-container">
+            <div class="slot-available">
+              <div class="dose-1">
+                <div>D1</div>
+                <div>${s.available_capacity_dose1}</div>
+              </div>
+              <div class="total-doses">${s.available_capacity}</div>
+              <div class="dose-2">
+                <div>D2</div>
+                <div>${s.available_capacity_dose2}</div>
+              </div>
+            </div>
+            <p>${s.vaccine}</p>
+            <small>Age ${s.min_age_limit}+</small>
+          </div>`
         }
       });
     }
