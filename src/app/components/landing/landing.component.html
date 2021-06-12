@@ -18,6 +18,9 @@
         <div class="search">
           <button mat-raised-button color="accent" (click)="calendarByPin()" [disabled]="!pincodeControl.valid">Search</button>
         </div>
+        <div class="table-container" *ngIf="tableResponseByPin">
+          <ifc-appointment-table [response]="tableResponseByPin"></ifc-appointment-table>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Search by District" isActive="true">
@@ -49,7 +52,9 @@
             <button mat-raised-button color="accent" [disabled]="!districtControl.valid" (click)="calendarByDistrict()">Search</button>
           </div>
         </ng-container>
-        <ifc-appointment-table *ngIf="tableResponse" [response]="tableResponse"></ifc-appointment-table>
+        <div class="table-container" *ngIf="tableResponseByDistrict">
+          <ifc-appointment-table [response]="tableResponseByDistrict"></ifc-appointment-table>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>

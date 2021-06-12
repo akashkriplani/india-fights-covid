@@ -27,7 +27,8 @@ export class LandingComponent {
     Validators.maxLength(6),
     Validators.pattern('^[0-9]{6}$')
   ]);
-  public tableResponse: ICalendarResponse;
+  public tableResponseByDistrict: ICalendarResponse;
+  public tableResponseByPin: ICalendarResponse;
 
   constructor(private dataService: DataService) { }
 
@@ -43,14 +44,17 @@ export class LandingComponent {
   }
 
   calendarByDistrict(): void {
-    this.tableResponse = null;
+    this.tableResponseByDistrict = null;
     this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => {
-      this.tableResponse = response;
+      this.tableResponseByDistrict = response;
     });
   }
 
   calendarByPin(): void {
-    this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarResponse) => console.log(response.centers));
+    this.tableResponseByPin = null;
+    this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarResponse) => {
+      this.tableResponseByPin = response;
+    });
   }
 
   getDistrict(state: IStates): void {
