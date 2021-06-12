@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -19,28 +19,27 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
-  public count: number = 1;
+export class LoginComponent {
+  public count: number = 15;
   public matcher = new MyErrorStateMatcher();
   public mobileNumberControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(10),
     Validators.pattern('^[0-9]{10}$')
   ]);
-  public txnId: string;
+  public showCounter: boolean = false;
   public showOTPTemplate: boolean;
+  public txnId: string;
 
   constructor(private dataService: DataService, private router: Router) { }
-
-  ngOnInit(): void {
-  }
 
   generateOTP(): void {
     this.dataService.generateOTP(this.mobileNumberControl.value)
       .pipe(take(1)).subscribe((response: IGenerateOTPResponse) => {
-      this.txnId = response.txnId;
-      this.showOTPTemplate = true;
-    });
+        this.showCounter = true;
+        this.txnId = response.txnId;
+        this.showOTPTemplate = true;
+      });
   }
 
   verifyOTP(encryptedOTP: string): void {
