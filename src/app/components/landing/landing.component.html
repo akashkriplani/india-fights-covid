@@ -1,4 +1,5 @@
 <section>
+  <h1 class="text-center">Check your nearest vaccination center and slot availability</h1>
   <mat-tab-group
   [color]="'accent'"
   [backgroundColor]="'accent'"
@@ -48,6 +49,7 @@
             <button mat-raised-button color="accent" [disabled]="!districtControl.valid" (click)="calendarByDistrict()">Search</button>
           </div>
         </ng-container>
+        <ifc-appointment-table *ngIf="tableResponse" [response]="tableResponse"></ifc-appointment-table>
       </div>
     </mat-tab>
   </mat-tab-group>
