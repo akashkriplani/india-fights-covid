@@ -6,7 +6,7 @@ import { DataService } from '../../../services/data.service';
 import { IAppointmentTableData, ICalendarResponse, ICenters, ISessions } from '../../../interfaces/common.interface';
 import { ColumnDefinition } from './column-definition';
 import { Constants } from '../../../constants/Constants';
-import { DateSeparator } from '../../enumerations';
+import { DateSeparator, FeeType } from '../../enumerations';
 
 @Component({
   selector: 'ifc-appointment-table',
@@ -18,7 +18,7 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
   public appointmentTableColumns: ColumnDefinition[] = [
     {
       columnDef: 'center',
-      header: '',
+      header: 'Vaccination center',
       sticky: true,
       enableSort: true,
       cell: (element: IAppointmentTableData) => this.buildAddressInfo(element.center)
@@ -136,19 +136,35 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
   private buildAddressInfo(center: ICenters): string {
     let str = '';
     if (center?.name) {
-      str += `<p>${center.name}</p>`;
+      str += `<p>${center.name}`;
     }
+
+    if (center?.fee_type === FeeType.PAID) {
+      str += `<span class="fee-type">${center.fee_type.toUpperCase()}</span></p>`;
+    } else {
+      str += `</p>`;
+    }
+
     if (center?.address) {
       str += `<p>${center.address}`;
     }
+
     if (center?.district_name) {
       str += `<span>, ${center.district_name}</span>`;
     }
+
     if (center?.state_name) {
       str += `<span>, ${center.state_name}</span>`;
     }
+
     if (center?.pincode) {
       str += `<span>, ${center.pincode}</span></p>`;
+    }
+
+    if (center?.vaccine_fees?.length > 0) {
+      center.vaccine_fees.forEach(v => {
+        str += `<p>${v.vaccine}: &#8377; ${v.fee}</p>`;
+      })
     }
     return str;
   }
