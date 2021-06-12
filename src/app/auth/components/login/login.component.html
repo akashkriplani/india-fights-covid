@@ -10,15 +10,23 @@
       </mat-card-header>
       <mat-card-content>
         <ifc-otp [buttonLabel]="'Verify & Proceed'" (submit)="verifyOTP($event)"></ifc-otp>
-        <ng-container [counter]="180" [interval]="1000" (value)="count = $event">
-          <span>{{ count }}</span>
+        <ng-container *ngIf="showCounter" [counter]="15" [interval]="1000" (value)="count = $event">
+          <div
+            class="counter"
+            [ngClass]="{ 'alert' : count < 10 }"
+            *ngIf="count > 0"
+          >
+            {{ count + ' seconds remaining' }}
+          </div>
         </ng-container>
-        <p>There might be some delay in receiving the OTP due to heavy traffic</p>
+        <div class="otp-message">There might be some delay in receiving the OTP due to heavy traffic</div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button mat-accent *ngIf="count === 0" color="accent" (click)="generateOTP()">
-          Resend OTP
-        </button>
+        <div class="button-container">
+          <button mat-raised-button mat-accent *ngIf="count === 0" color="accent" (click)="generateOTP()">
+            Resend OTP
+          </button>
+        </div>
       </mat-card-actions>
     </ng-container>
     <ng-template #loginTemplate>
@@ -44,9 +52,11 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button mat-accent color="accent" [disabled]="!mobileNumberControl.valid" (click)="generateOTP()">
-          Get OTP
-        </button>
+        <div class="button-container">
+          <button mat-raised-button mat-accent color="accent" [disabled]="!mobileNumberControl.valid" (click)="generateOTP()">
+            Get OTP
+          </button>
+        </div>
       </mat-card-actions>
     </ng-template>
   </mat-card>

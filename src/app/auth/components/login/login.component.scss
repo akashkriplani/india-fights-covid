@@ -34,6 +34,24 @@
   width: 100%;
 }
 
-button.mat-raised-button {
-  width: 100%;
+.counter {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.otp-message {
+  margin: 0 auto;
+  max-width: 80%;
+  padding-top: 24px;
+  text-align: center;
+}
+
+.alert {
+  color: #f44336;
 }
