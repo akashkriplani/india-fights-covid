@@ -4,6 +4,7 @@
     matSort
     matSortActive="center"
     matSortDirection="asc"
+    matSortDisableClear
     (matSortChange)="sortTableData()"
     class="mat-elevation-z8"
     >
@@ -18,7 +19,7 @@
   </table>
   <mat-paginator
     #paginator
-    color="primary"
+    color="accent"
     [length]="matTableDataSource?.data?.length"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"

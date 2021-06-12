@@ -19,7 +19,7 @@
             {{ count + ' seconds remaining' }}
           </div>
         </ng-container>
-        <div class="otp-message">There might be some delay in receiving the OTP due to heavy traffic</div>
+        <div class="otp-message" [ngClass]="{ 'padding-top' : count === 0 }">There might be some delay in receiving the OTP due to heavy traffic</div>
       </mat-card-content>
       <mat-card-actions>
         <div class="button-container">

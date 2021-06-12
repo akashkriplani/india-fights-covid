@@ -4,6 +4,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DataService } from '../../services/data.service';
 import { ICalendarResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 import { take } from 'rxjs/operators';
+import { Constants } from 'src/app/constants/Constants';
 
 @Component({
   selector: 'ifc-landing',
@@ -17,7 +18,7 @@ export class LandingComponent {
   public floatLabelControl = new FormControl('auto');
   public states: IStates[];
   public selectedDistrict: IDistricts;
-  public selectedIndex: number = 1;
+  public selectedIndex: number = Constants.STARTING_TAB_INDEX;
   public selectedState: IStates;
   public stateControl = new FormControl('', Validators.required);
   public districtControl = new FormControl('', Validators.required);

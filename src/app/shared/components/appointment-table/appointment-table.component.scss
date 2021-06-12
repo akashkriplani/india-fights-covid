@@ -4,9 +4,9 @@ table {
 }
 
 table th {
-  background-color: #e0e0e0;
-  color: #000;
-  font-size: 15px;
+  background-color: #ff4081;
+  color: #fff;
+  font-size: 16px;
 }
 
 table td {
@@ -45,6 +45,10 @@ td.mat-column-date1 {
 
 .text-center {
   text-align: center;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: #fff;
 }
 
 ::ng-deep .mat-sort-header-container {
@@ -96,12 +100,18 @@ td.mat-column-date1 {
   color: #ff4081;
 }
 
+::ng-deep .center-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0 !important;
+}
+
 ::ng-deep .fee-type {
   background-color: #f44336;
   border-radius: 10px;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 6px;
   padding: 4px;
 }
