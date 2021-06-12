@@ -21,14 +21,22 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table> -->
-<!-- {{response | json }} -->
-<table mat-table [dataSource]="mattabledataSource" matSort class="mat-elevation-z8">
-  <ng-container *ngFor="let col of displaycolumndefs" [matColumnDef]="col?.columnDef" sticky="{{col?.sticky}}">
-    <div>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col?.header}} </th>
-      <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element)"></td>
-    </div>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+{{response | json }}
+<ng-container *ngIf="response?.centers?.length > 0; else noCenterAvailableTemplate">
+  <table mat-table [dataSource]="mattabledataSource" class="mat-elevation-z8">
+    <ng-container *ngFor="let col of displaycolumndefs" [matColumnDef]="col?.columnDef" [sticky]="col?.sticky">
+      <div>
+        <th mat-header-cell *matHeaderCellDef> {{col?.header}} </th>
+        <td mat-cell *matCellDef="let element" [innerHTML]="col?.cell(element)"></td>
+      </div>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator [length]="response?.centers?.length" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+  </mat-paginator>
+</ng-container>
+<ng-template #noCenterAvailableTemplate>
+  <h2 class="text-center">No vaccination center is available for booking.</h2>
+</ng-template>

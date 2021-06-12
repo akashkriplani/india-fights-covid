@@ -3,7 +3,9 @@ const Api = {
 };
 
 export const Constants = {
-  NO_OF_DAYS: 7
+  NO_OF_DAYS: 7,
+  PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
+  PAGE_SIZE: 10
 };
 
 export const SocialMediaLinks = {
