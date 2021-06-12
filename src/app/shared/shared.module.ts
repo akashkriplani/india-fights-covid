@@ -16,8 +16,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppointmentTableComponent } from './components/appointment-table/appointment-table.component';
 import { OtpComponent } from './components/otp/otp.component';
 import { CounterDirective } from './directives/counter.directive';
-import { MaskPhonePipe } from './pipes/mask-phone.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
+import { MaskPhonePipe } from './pipes/mask-phone.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 const materialModules = [
   MatButtonModule,
@@ -40,8 +41,9 @@ const components = [
 ];
 
 const pipes = [
+  FormatPhonePipe,
   MaskPhonePipe,
-  FormatPhonePipe
+  SafePipe
 ];
 
 const directives = [
@@ -51,7 +53,8 @@ const directives = [
 @NgModule({
   declarations: [...components, ...directives, ...pipes],
   imports: [...materialModules, ReactiveFormsModule, CommonModule],
-  exports: [...components, ...directives, ...pipes, ...materialModules]
+  exports: [...components, ...directives, ...pipes, ...materialModules],
+  providers: [SafePipe]
 })
 
 export class SharedModule {
