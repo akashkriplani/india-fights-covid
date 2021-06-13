@@ -3,12 +3,15 @@ const Api = {
 };
 
 export const Constants = {
+  API_MESSAGE: {
+    GET_DETAILS_SUCCESS: 'Details fetched successfully',
+    GET_DISTRICT_SUCCESS: 'Districts fetched successfully.',
+    GET_STATES_SUCCESS: 'States fetched successfully.',
+    SWW_ERROR: 'Something went wrong! Please try again in some time.',
+    USER_LOGIN_SUCCESS: 'User logged in successfully.',
+    USER_LOGOUT_SUCCESS: 'User logged out successfully.'
+  },
   BOOKED: 'Booked',
-  NO_OF_DAYS: 7,
-  NOT_AVAILABLE: 'NA',
-  PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
-  PAGE_SIZE: 10,
-  STARTING_TAB_INDEX: 0,
   FILTER_OPTIONS: [
     {
       DISPLAYNAME: 'Age 18+',
@@ -36,9 +39,14 @@ export const Constants = {
     },
     {
       DISPLAYNAME: 'Paid',
-      VALUE: 'paid'
+      VALUE: 'paid',
     }
-  ]
+  ],
+  NO_OF_DAYS: 7,
+  NOT_AVAILABLE: 'NA',
+  PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
+  PAGE_SIZE: 10,
+  STARTING_TAB_INDEX: 0
 };
 
 export const SocialMediaLinks = {

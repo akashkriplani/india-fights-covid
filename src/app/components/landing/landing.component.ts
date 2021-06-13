@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DataService } from '../../services/data.service';
+import { NotifierService } from 'angular-notifier';
 import { ICalendarResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 import { take } from 'rxjs/operators';
 import { Constants } from 'src/app/constants/Constants';
+import { Notify } from 'src/app/shared/enumerations';
 
 @Component({
   selector: 'ifc-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   public districtControl = new FormControl('', Validators.required);
   public districts: IDistricts[];
   public districtWiseInfo: IDistrictWiseInfo;
@@ -30,7 +32,7 @@ export class LandingComponent {
   public tableResponseByDistrict: ICalendarResponse;
   public tableResponseByPin: ICalendarResponse;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private notifyService: NotifierService) { }
 
   ngOnInit(): void {
     if (this.selectedIndex === 1) {
@@ -46,14 +48,20 @@ export class LandingComponent {
   calendarByDistrict(): void {
     this.tableResponseByDistrict = null;
     this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => {
+      this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DETAILS_SUCCESS);
       this.tableResponseByDistrict = response;
+    }, () => {
+      this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
     });
   }
 
   calendarByPin(): void {
     this.tableResponseByPin = null;
     this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarResponse) => {
+      this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DETAILS_SUCCESS);
       this.tableResponseByPin = response;
+    }, () => {
+      this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
     });
   }
 
@@ -63,8 +71,11 @@ export class LandingComponent {
     this.districtControl.markAsUntouched();
     if (this.selectedState) {
       this.dataService.getDistricts(this.selectedState.state_id)
-      .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
+        .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
+        this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DISTRICT_SUCCESS);
         this.districts = response.districts;
+      }, () => {
+        this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
       });
     }
   }
@@ -72,21 +83,28 @@ export class LandingComponent {
   getStates(event: MatTabChangeEvent): void {
     if (event.tab.textLabel === 'Search by District' && !this.states) {
       this.dataService.getStates().pipe(take(1)).subscribe((response: IStatesResponse) => {
+        this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_STATES_SUCCESS);
         this.states = response.states;
+      }, () => {
+        this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
       });
     }
   }
 
   findByDistrict(): void {
     this.dataService.findByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
+      // TODO: To be handled
       this.districtWiseInfo = response;
-      console.log(this.districtWiseInfo);
+    }, () => {
+      this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
     });
   }
 
   findByPin(): void {
     this.dataService.findByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: IDistrictWiseInfo) => {
-      console.log(response);
+      // TODO: To be handled
+    }, () => {
+      this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
     });
   }
 
