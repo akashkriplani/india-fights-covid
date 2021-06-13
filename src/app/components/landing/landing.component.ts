@@ -18,6 +18,7 @@ export class LandingComponent implements OnInit {
   public districts: IDistricts[];
   public districtWiseInfo: IDistrictWiseInfo;
   public floatLabelControl = new FormControl('auto');
+  public isLoading = true;
   public pincodeControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
@@ -47,21 +48,27 @@ export class LandingComponent implements OnInit {
 
   calendarByDistrict(): void {
     this.tableResponseByDistrict = null;
+    this.isLoading = true;
     this.dataService.calendarByDistrict(this.selectedDistrict.district_id).pipe(take(1)).subscribe((response: ICalendarResponse) => {
       this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DETAILS_SUCCESS);
       this.tableResponseByDistrict = response;
     }, () => {
       this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
+    }, () => {
+      this.isLoading = false;
     });
   }
 
   calendarByPin(): void {
     this.tableResponseByPin = null;
+    this.isLoading = true;
     this.dataService.calendarByPin(this.pincodeControl.value).pipe(take(1)).subscribe((response: ICalendarResponse) => {
       this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DETAILS_SUCCESS);
       this.tableResponseByPin = response;
     }, () => {
       this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
+    }, () => {
+      this.isLoading = false;
     });
   }
 
@@ -70,23 +77,29 @@ export class LandingComponent implements OnInit {
     this.districtControl.setValue('');
     this.districtControl.markAsUntouched();
     if (this.selectedState) {
+      this.isLoading = true;
       this.dataService.getDistricts(this.selectedState.state_id)
         .pipe((take(1))).subscribe((response: IDistrictsResponse) => {
         this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_DISTRICT_SUCCESS);
-        this.districts = response.districts;
+          this.districts = response.districts;
       }, () => {
         this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
+        }, () => {
+        this.isLoading = false;
       });
     }
   }
 
   getStates(event: MatTabChangeEvent): void {
     if (event.tab.textLabel === 'Search by District' && !this.states) {
+      this.isLoading = true;
       this.dataService.getStates().pipe(take(1)).subscribe((response: IStatesResponse) => {
         this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.GET_STATES_SUCCESS);
         this.states = response.states;
       }, () => {
         this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
+      }, () => {
+        this.isLoading = false;
       });
     }
   }

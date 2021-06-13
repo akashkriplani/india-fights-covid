@@ -23,7 +23,8 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Search by District" isActive="true">
+    <mat-tab label="Search by District">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
       <div class="state-container">
         <h4>State</h4>
         <mat-form-field appearance="fill">
