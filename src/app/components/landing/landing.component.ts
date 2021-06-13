@@ -5,8 +5,8 @@ import { DataService } from '../../services/data.service';
 import { NotifierService } from 'angular-notifier';
 import { ICalendarResponse, IDistricts, IDistrictsResponse, IDistrictWiseInfo, IStates, IStatesResponse } from '../../interfaces';
 import { take } from 'rxjs/operators';
-import { Constants } from 'src/app/constants/Constants';
-import { Notify } from 'src/app/shared/enumerations';
+import { Constants } from '../../constants/Constants';
+import { Notify } from '../../shared/enumerations';
 
 @Component({
   selector: 'ifc-landing',
