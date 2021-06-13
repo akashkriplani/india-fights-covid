@@ -10,7 +10,7 @@
       </mat-card-header>
       <mat-card-content>
         <ifc-otp [buttonLabel]="'Verify & Proceed'" (submit)="verifyOTP($event)"></ifc-otp>
-        <ng-container *ngIf="showCounter" [counter]="180" [interval]="1000" (value)="count = $event">
+        <ng-container *ngIf="showCounter" [counter]="15" [interval]="1000" (value)="count = $event">
           <div
             class="counter"
             [ngClass]="{ 'alert' : count < 10 }"

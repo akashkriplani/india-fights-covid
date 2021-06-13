@@ -12,22 +12,21 @@ import { Constants } from 'src/app/constants/Constants';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
-
+  public districtControl = new FormControl('', Validators.required);
   public districts: IDistricts[];
   public districtWiseInfo: IDistrictWiseInfo;
   public floatLabelControl = new FormControl('auto');
-  public states: IStates[];
-  public selectedDistrict: IDistricts;
-  public selectedIndex: number = Constants.STARTING_TAB_INDEX;
-  public selectedState: IStates;
-  public stateControl = new FormControl('', Validators.required);
-  public districtControl = new FormControl('', Validators.required);
   public pincodeControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.maxLength(6),
     Validators.pattern('^[0-9]{6}$')
   ]);
+  public selectedDistrict: IDistricts;
+  public selectedIndex: number = Constants.STARTING_TAB_INDEX;
+  public selectedState: IStates;
+  public stateControl = new FormControl('', Validators.required);
+  public states: IStates[];
   public tableResponseByDistrict: ICalendarResponse;
   public tableResponseByPin: ICalendarResponse;
 

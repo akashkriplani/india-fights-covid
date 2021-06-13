@@ -15,5 +15,4 @@ export class FooterComponent implements OnInit {
     this.links = SocialMediaLinks;
     this.currentYear = new Date().getFullYear();
   }
-
 }
