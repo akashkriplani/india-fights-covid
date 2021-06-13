@@ -4,7 +4,7 @@
     <div class="otp-form-field">
       <mat-form-field class="otp-container" *ngFor="let input of formInput;  index as i">
         <input #formRow type="text" matInput autocomplete="off" formControlName="{{input}}" class="form-control" maxlength="1" autofocus="i === 0"
-          (keyup)="keyUpEvent($event, i)">
+          (keyup)="keyUpEvent($event, i)" (keyup.enter)="otpForm.valid ? onSubmit(): null">
       </mat-form-field>
     </div>
     <div class="button-container">
