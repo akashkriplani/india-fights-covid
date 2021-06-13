@@ -8,7 +8,37 @@ export const Constants = {
   NOT_AVAILABLE: 'NA',
   PAGE_SIZE_OPTIONS: [5, 10, 25, 50, 100],
   PAGE_SIZE: 10,
-  STARTING_TAB_INDEX: 0
+  STARTING_TAB_INDEX: 0,
+  FILTER_OPTIONS: [
+    {
+      DISPLAYNAME: 'Age 18+',
+      VALUE: 18
+    },
+    {
+      DISPLAYNAME: 'Age 45+',
+      VALUE: 45
+    },
+    {
+      DISPLAYNAME: 'Covidshield',
+      VALUE: 'covishield'
+    },
+    {
+      DISPLAYNAME: 'Covaxin',
+      VALUE: 'covaxin'
+    },
+    {
+      DISPLAYNAME: 'Sputnik V',
+      VALUE: 'sputnik'
+    },
+    {
+      DISPLAYNAME: 'Free',
+      VALUE: 'free'
+    },
+    {
+      DISPLAYNAME: 'Paid',
+      VALUE: 'paid'
+    }
+  ]
 };
 
 export const SocialMediaLinks = {
