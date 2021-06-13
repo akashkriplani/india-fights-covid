@@ -115,3 +115,19 @@ td.mat-column-date1 {
   margin-left: 6px;
   padding: 4px;
 }
+
+.mat-button-toggle:not(:first-child) {
+  margin-left: 10px;
+}
+
+.mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
+.mat-button-toggle-group-appearance-standard {
+  border: 0;
+  padding: 10px 0;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
