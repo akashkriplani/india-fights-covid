@@ -1,4 +1,4 @@
-# India fights COVID
+# India fights COVID (COVID-19 Vaccination Protal)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
 

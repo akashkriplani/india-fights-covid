@@ -3,8 +3,12 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DataService } from '../../../services/data.service';
+import { NotifierService } from 'angular-notifier';
 import { IConfirmOTPPayload, IConfirmOTPResponse, IGenerateOTPResponse } from '../../../interfaces';
+import { Constants } from '../../../constants/Constants';
+import { Notify } from '../../../shared/enumerations';
 import { take } from 'rxjs/operators';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -32,7 +36,11 @@ export class LoginComponent {
   public txnId: string;
   private token: string;
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private notifyService: NotifierService
+  ) { }
 
   generateOTP(): void {
     this.dataService.generateOTP(this.mobileNumberControl.value)
@@ -40,6 +48,8 @@ export class LoginComponent {
         this.showCounter = true;
         this.txnId = response.txnId;
         this.showOTPTemplate = true;
+      }, () => {
+        this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
       });
   }
 
@@ -53,8 +63,11 @@ export class LoginComponent {
         this.token = response.token;
         if (this.token) {
           this.dataService.authStatusListener.next(true);
+          this.notifyService.notify(Notify.SUCCESS, Constants.API_MESSAGE.USER_LOGIN_SUCCESS);
           this.router.navigate(['/']);
         }
+      }, () => {
+        this.notifyService.notify(Notify.ERROR, Constants.API_MESSAGE.SWW_ERROR);
     })
   }
 

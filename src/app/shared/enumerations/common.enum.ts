@@ -20,3 +20,11 @@ export enum FeeType {
   FREE = 'Free',
   PAID = 'Paid'
 }
+
+export enum Notify {
+  DEFAULT = 'default',
+  ERROR = 'error',
+  INFO = 'info',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+}
