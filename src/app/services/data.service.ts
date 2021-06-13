@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ICalendarResponse, IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
 import { DateSeparator } from '../shared/enumerations';
-import { Observable } from 'rxjs';
 import { Url } from '../constants/Constants';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor(private _http: HttpClient) { }
+  public authStatusListener = new Subject<boolean>();
+
+  constructor(private _http: HttpClient, private router: Router) { }
 
   public calendarByDistrict(districtId: number): Observable<ICalendarResponse> {
     const payload = {
@@ -54,6 +57,10 @@ export class DataService {
     return this._http.post<IGenerateOTPResponse>(Url.api.generateOTP, requestPayload);
   }
 
+  public getAuthStatusListener(): Observable<boolean> {
+    return this.authStatusListener.asObservable();
+  }
+
   public getCurrentDate(currentDate: Date = null, nameOfMonth: boolean = false, separator: DateSeparator = DateSeparator.HYPHEN): string {
     const dateObj = currentDate ? currentDate : new Date();
     const date = dateObj.getDate();
@@ -72,6 +79,11 @@ export class DataService {
 
   public getStates(): Observable<IStatesResponse> {
     return this._http.get<IStatesResponse>(Url.api.states);
+  }
+
+  public logout(): void {
+    this.authStatusListener.next(false);
+    this.router.navigate(['/']);
   }
 
   public validateNumber(event: any): void {

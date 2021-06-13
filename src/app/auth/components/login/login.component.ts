@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DataService } from '../../../services/data.service';
-import { take } from 'rxjs/operators';
 import { IConfirmOTPPayload, IConfirmOTPResponse, IGenerateOTPResponse } from '../../../interfaces';
+import { take } from 'rxjs/operators';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -20,7 +20,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 
 export class LoginComponent {
-  public count: number = 15;
+  public count: number = 1;
   public matcher = new MyErrorStateMatcher();
   public mobileNumberControl = new FormControl('', [
     Validators.required,
@@ -30,6 +30,7 @@ export class LoginComponent {
   public showCounter: boolean = false;
   public showOTPTemplate: boolean;
   public txnId: string;
+  private token: string;
 
   constructor(private dataService: DataService, private router: Router) { }
 
@@ -49,11 +50,15 @@ export class LoginComponent {
     }
     this.dataService.confirmOTP(payload)
       .pipe(take(1)).subscribe((response: IConfirmOTPResponse) => {
-        this.router.navigate(['/']);
+        this.token = response.token;
+        if (this.token) {
+          this.dataService.authStatusListener.next(true);
+          this.router.navigate(['/']);
+        }
     })
   }
 
-  validateNumber(event): void {
+  validateNumber(event: any): void {
     this.dataService.validateNumber(event);
   }
 

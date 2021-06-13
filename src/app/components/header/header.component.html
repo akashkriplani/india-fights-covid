@@ -6,7 +6,8 @@
     <div class="nav-items">
       <ul>
         <li [routerLink]="['/']">Home</li>
-        <li [routerLink]="['/login']">Login</li>
+        <li *ngIf="!isAuthenticated" [routerLink]="['/login']">Login</li>
+        <li *ngIf="isAuthenticated" (click)="logout()">Logout</li>
       </ul>
     </div>
   </mat-toolbar>
