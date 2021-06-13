@@ -1,10 +1,17 @@
 export class ColumnDefinition {
-  columnDef: string;
-  header: string;
-  cell: any;
-  sticky: boolean;
-  enableSort: boolean;
-  constructor(_columnDef: string, _header: string, _cell: any, _sticky: boolean, _enableSort: boolean) {
+  public cell: any;
+  public columnDef: string;
+  public enableSort: boolean;
+  public header: string;
+  public sticky: boolean;
+
+  constructor(
+    _columnDef: string,
+    _header: string,
+    _cell: any,
+    _sticky: boolean,
+    _enableSort: boolean
+  ) {
     this.cell = _cell;
     this.columnDef = _columnDef;
     this.enableSort = _enableSort;

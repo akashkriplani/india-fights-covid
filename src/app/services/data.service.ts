@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ICalendarResponse, IConfirmOTPPayload, IConfirmOTPResponse, IDistrictsResponse, IDistrictWiseInfo, IGenerateOTPPayload, IGenerateOTPResponse, IStatesResponse } from '../interfaces';
+import { DateSeparator } from '../shared/enumerations';
 import { Observable } from 'rxjs';
 import { Url } from '../constants/Constants';
-import { DateSeparator } from '../shared/enumerations';
 
 @Injectable({
   providedIn: 'root'
