@@ -25,7 +25,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator #paginator color="accent" [length]="matTableDataSource?.data?.length" [pageSize]="pageSize"
+      <mat-paginator color="accent" [length]="matTableDataSource?.data?.length" [pageSize]="pageSize"
         [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
       </mat-paginator>
   </ng-container>

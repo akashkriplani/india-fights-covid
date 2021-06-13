@@ -131,15 +131,15 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public applyFilter(filterValue: MatButtonToggleChange) {
-    if (filterValue.value.length === 0) {
+  public applyFilter(filter: MatButtonToggleChange): void {
+    if (filter.value.length === 0) {
       this.matTableDataSource.filter = null;
       this.noResultsFound = false;
       return;
     }
-    for (let i = 0; i < filterValue.value.length; i++) {
-      filterValue.value[i] = filterValue.value[i].toString().trim().toLowerCase();
-      this.matTableDataSource.filter = filterValue.value[i];
+    for (let i = 0; i < filter.value.length; i++) {
+      filter.value[i] = filter.value[i].toString().trim().toLowerCase();
+      this.matTableDataSource.filter = filter.value[i];
     }
     this.noResultsFound = this.matTableDataSource.filteredData.length === 0;
   }
@@ -164,8 +164,10 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
         }
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
-            case 'center': return this.compare(a.center.name, b.center.name, isAsc);
-            default: return 0;
+          case 'center':
+            return this.compare(a.center.name, b.center.name, isAsc);
+          default:
+            return 0;
         }
       })
     };
