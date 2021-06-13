@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -110,14 +111,35 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
       this.matTableDataSource.paginator = this.paginator;
       this.matTableDataSource.sort = this.sort;
       this.setCustomSort();
+      this.setCustomFilter();
       this.sortTableData();
       this.cdRef.detectChanges();
+    }
+  }
+
+  public applyFilter(filterValue: MatButtonToggleChange) {
+    if (filterValue.value.length === 0) {
+      this.matTableDataSource.filter = null;
+      return;
+    }
+    for (let i = 0; i < filterValue.value.length; i++) {
+      filterValue.value[i] = filterValue.value[i].trim().toLowerCase();
+      this.matTableDataSource.filter = filterValue.value[i];
     }
   }
 
   public sortTableData(): void {
     this.matTableDataSource.data = this.matTableDataSource.sortData(this.matTableDataSource.data, this.sort);
   }
+
+  private setCustomFilter(): void {
+    this.matTableDataSource.filterPredicate =
+      (data: IAppointmentTableData, filter: string) => {
+        return data.center.fee_type.trim().toLowerCase().indexOf(filter) !== -1 ||
+          data.center.sessions.some(s => s.min_age_limit.toString().toLowerCase().indexOf(filter) !== -1) || data.center.sessions.some(s => s.vaccine.trim().toLowerCase().indexOf(filter) !== -1);
+    }
+  }
+
   private setCustomSort(): void {
     this.matTableDataSource.sortData = (data: IAppointmentTableData[], sort: MatSort) => {
       return data.sort((a: IAppointmentTableData, b: IAppointmentTableData) => {

@@ -1,4 +1,16 @@
 <ng-container *ngIf="response?.centers?.length > 0; else noCenterAvailableTemplate">
+  <div class="filter-container">
+    <mat-button-toggle-group name="filterOptions" multiple aria-label="filter options" (change)="applyFilter($event)">
+      <mat-button-toggle value="18">Age 18+</mat-button-toggle>
+      <mat-button-toggle value="45">Age 45+</mat-button-toggle>
+      <mat-button-toggle value="covishield">Covishield</mat-button-toggle>
+      <mat-button-toggle value="covaxin">Covaxin</mat-button-toggle>
+      <mat-button-toggle value="sputnik">Sputnik V</mat-button-toggle>
+      <mat-button-toggle value="free">Free</mat-button-toggle>
+      <mat-button-toggle value="paid">Paid</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
   <table mat-table
     [dataSource]="matTableDataSource"
     matSort
