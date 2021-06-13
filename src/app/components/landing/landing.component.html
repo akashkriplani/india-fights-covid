@@ -14,6 +14,7 @@
           <input matInput autocomplete="off" placeholder="Enter the pincode" maxlength="6" [formControl]="pincodeControl" (keyup.enter)="calendarByPin()" (keydown)="validateNumber($event)">
           <mat-error *ngIf="pincodeControl.hasError('required')">Pincode is required</mat-error>
           <mat-error *ngIf="pincodeControl.hasError('minlength') || pincodeControl.hasError('maxlength')">Pincode should be of 6 digits</mat-error>
+          <mat-error *ngIf="pincodeControl.hasError('pattern')">Pincode should have only digits</mat-error>
         </mat-form-field>
         <div class="search">
           <button mat-raised-button color="accent" (click)="calendarByPin()" [disabled]="!pincodeControl.valid">Search</button>
