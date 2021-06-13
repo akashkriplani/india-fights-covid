@@ -75,12 +75,26 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
     }
   ];
   public displayedColumns: Array<string> = this.appointmentTableColumns.map(c => c.columnDef);
-  public matTableDataSource:  MatTableDataSource<IAppointmentTableData> = new MatTableDataSource<IAppointmentTableData>();
+  public filterOptions = Constants.FILTER_OPTIONS;
+  public matTableDataSource: MatTableDataSource<IAppointmentTableData> = new MatTableDataSource<IAppointmentTableData>();
+  public noResultsFound: boolean = false;
   public pageSizeOptions: number[] = Constants.PAGE_SIZE_OPTIONS;
   public pageSize: number = Constants.PAGE_SIZE;
-  @ViewChild('paginator') public paginator: MatPaginator;
   @Input() public response: ICalendarResponse;
-  @ViewChild(MatSort) public sort: MatSort;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
   public TABLE_DATA: IAppointmentTableData[] = [];
 
   constructor(private cdRef: ChangeDetectorRef, private dataService: DataService) { }
@@ -120,12 +134,14 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
   public applyFilter(filterValue: MatButtonToggleChange) {
     if (filterValue.value.length === 0) {
       this.matTableDataSource.filter = null;
+      this.noResultsFound = false;
       return;
     }
     for (let i = 0; i < filterValue.value.length; i++) {
-      filterValue.value[i] = filterValue.value[i].trim().toLowerCase();
+      filterValue.value[i] = filterValue.value[i].toString().trim().toLowerCase();
       this.matTableDataSource.filter = filterValue.value[i];
     }
+    this.noResultsFound = this.matTableDataSource.filteredData.length === 0;
   }
 
   public sortTableData(): void {
@@ -235,6 +251,11 @@ export class AppointmentTableComponent implements OnInit, AfterViewInit {
   private getSessionInfo(center: ICenters, columnHeader: string): ISessions[] {
     const headerDate = this.dataService.getCurrentDate(new Date(columnHeader));
     return center.sessions.filter(s => s.date === headerDate);
+  }
+
+  private setDataSourceAttributes(): void {
+    this.matTableDataSource.paginator = this.paginator;
+    this.matTableDataSource.sort = this.sort;
   }
 
   private setTableColumnHeaders(): void {
