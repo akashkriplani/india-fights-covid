@@ -31,7 +31,7 @@ export const Constants = {
     },
     {
       DISPLAYNAME: 'Sputnik V',
-      VALUE: 'sputnik'
+      VALUE: 'sputnik V'
     },
     {
       DISPLAYNAME: 'Free',
